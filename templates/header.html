@@ -20,6 +20,12 @@
         <li><a href="{{url_for('home') }}" class="nav-link px-2 link-secondary">Home</a></li>
         <li><a href="{{ url_for('translator') }}" class="nav-link px-2">Translator</a></li>
         <li><a href="{{ url_for('contact')}}" class="nav-link px-2">Contact</a></li>
+        {% if not current_user.is_authenticated: %}
+        <li><a href="{{ url_for('registration')}}" class="nav-link px-2">Register</a></li>
+        <li><a href="{{ url_for('login')}}" class="nav-link px-2">Login</a></li>
+        {% else: %}
+        <li><a href="{{ url_for('logout')}}" class="nav-link px-2">Logout</a></li>
+        {% endif %}
       </ul>
 
 <!--      <div class="col-md-3 text-end">-->

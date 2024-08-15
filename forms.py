@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, validators
+from wtforms.fields.simple import PasswordField
 from wtforms.validators import DataRequired, Email, ValidationError
 from flask_ckeditor import CKEditorField
 from flask_ckeditor.utils import cleanify
@@ -17,3 +18,14 @@ class ContactForm(FlaskForm):
     email = StringField(label='Email', validators=[DataRequired(), Email()])
     message_data = CKEditorField(label='Message', validators=[DataRequired()])
     submit = SubmitField("Send a message!")
+
+class RegisterForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired()])
+    email = StringField(label='Email', validators=[DataRequired(), Email()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Sign Me Up!")
+
+class LoginForm(FlaskForm):
+    email = StringField(label='Email', validators=[DataRequired(), Email()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Log Me In!")
