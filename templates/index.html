@@ -6,6 +6,13 @@
         <img src="../static/img/example2.png" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
       </div>
       <div class="col-lg-6">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <p class="flash">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
         <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Easy way to translate any text to morse code</h1>
         <p class="lead">With this app you can easly translate any text from latin dictionary using letters and numbers to morse code text.</p>
         <p class="lead">Register users will be able to send translated text by email.</p>

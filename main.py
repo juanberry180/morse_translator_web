@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Text, ForeignKey
 from morse import MorseCode
-from messages import MessageSend
+from messages import MessageSend, MorseSending
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from forms import TextForm, ContactForm, RegisterForm, LoginForm
@@ -107,6 +107,7 @@ def contact():
 
     return render_template('contact.html', form=contact_form, current_user=current_user)
 
+
 @app.route('/translator', methods=['GET', 'POST'])
 def translator():
     text_in_form = TextForm()
@@ -126,6 +127,18 @@ def translator():
         return render_template('translator.html', form=text_in_form, text="*".join(translated_text), current_user=current_user)
 
     return render_template('translator.html', form=text_in_form, current_user=current_user )
+
+
+@app.route('/send_by_email/<text>', methods=['GET', 'POST'])
+def send_by_email(text):
+        receiver_email = current_user.email
+        print(current_user.email)
+        name = current_user.name.encode("UTF-8")
+        message_text = text.replace("▄", "_").encode("UTF-8")
+        message = MorseSending(receiver_email, message_text, name)
+        if message:
+            flash('Message sent successfully')
+        return redirect(url_for('home'))
 
 
 @app.route('/logout')
